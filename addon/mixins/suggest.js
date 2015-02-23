@@ -39,7 +39,8 @@ export default Ember.Mixin.create({
     var _scope = this;
     if(event.keyCode === keyCodes.escape){
       this.set('suggestStyles', 'display:none;');
-    }else if(this.escapedChars.indexOf(event.keyCode) === -1){
+    }
+    else if(this.escapedChars.indexOf(event.keyCode) === -1){
       if(typeof this.get('targetObject').hideAlerts === 'function'){
         this.get('targetObject').hideAlerts();
       }
@@ -74,9 +75,11 @@ export default Ember.Mixin.create({
     if( this.get('suggestStyles') !== 'display:none;'){
       if (event.keyCode === keyCodes.down_arrow){
         this._highlightResult('down');
-      }else if (event.keyCode === keyCodes.up_arrow){
+      }
+      else if (event.keyCode === keyCodes.up_arrow){
         this._highlightResult('up');
-      }else if(event.keyCode === keyCodes.enter){
+      }
+      else if(event.keyCode === keyCodes.enter){
         if(!Ember.isBlank(this.selectableSuggestion)){
           this.send('selectItem', this.selectableSuggestion);
           this.set('suggestStyles', 'display:none;');
@@ -89,7 +92,8 @@ export default Ember.Mixin.create({
     var newHighlightIndex = -1;
     if(direction === 'down'){
       newHighlightIndex = this.hightlightIndex + 1;
-    }else if( this.hightlightIndex > 0){
+    }
+    else if( this.hightlightIndex > 0){
       newHighlightIndex = this.hightlightIndex - 1;
     }
 
