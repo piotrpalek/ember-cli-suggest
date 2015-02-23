@@ -1,5 +1,12 @@
 import Ember from 'ember';
 
+var keyCodes = {
+  escape: 27,
+  down_arrow: 40,
+  up_arrow: 38,
+  enter: 13
+};
+
 export default Ember.Mixin.create({
   layoutName: 'components/type-ahead',
   selectedFunction: '',
@@ -13,7 +20,11 @@ export default Ember.Mixin.create({
   selectedFromList: false,
   debounceTime: 0,
   miniumCharLength: 2,
-  escapedChars: [40,38, 13],
+  escapedChars: [
+    keyCodes.down_arrow,
+    keyCodes.up_arrow,
+    keyCodes.enter
+  ],
   hightlightIndex: -1,
   selectableSuggestion: null,
 
@@ -26,7 +37,7 @@ export default Ember.Mixin.create({
 
   keyUp: function(event){
     var _scope = this;
-    if(event.keyCode === 27){
+    if(event.keyCode === keyCodes.escape){
       this.set('suggestStyles', 'display:none;');
     }else if(this.escapedChars.indexOf(event.keyCode) === -1){
       if(typeof this.get('targetObject').hideAlerts === 'function'){
@@ -61,11 +72,11 @@ export default Ember.Mixin.create({
   keyDown: function(event){
     this._super(event);
     if( this.get('suggestStyles') !== 'display:none;'){
-      if (event.keyCode === 40){
+      if (event.keyCode === keyCodes.down_arrow){
         this._highlightResult('down');
-      }else if (event.keyCode === 38){
+      }else if (event.keyCode === keyCodes.up_arrow){
         this._highlightResult('up');
-      }else if(event.keyCode === 13){
+      }else if(event.keyCode === keyCodes.enter){
         if(!Ember.isBlank(this.selectableSuggestion)){
           this.send('selectItem', this.selectableSuggestion);
           this.set('suggestStyles', 'display:none;');
