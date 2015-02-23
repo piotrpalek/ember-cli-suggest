@@ -15,8 +15,7 @@ export default Ember.Mixin.create({
   inputVal: '',
   selectedVal: '',
   suggestions: Ember.A(),
-  suggestStylesOn: 'position: absolute; top: 100%; left: 0px; z-index: 100; display: block; right: auto;',
-  suggestStyles: 'display:none;',
+  showSuggestions: false,
   selectedFromList: false,
   debounceTime: 0,
   miniumCharLength: 2,
@@ -38,7 +37,7 @@ export default Ember.Mixin.create({
   keyUp: function(event){
     var _scope = this;
     if(event.keyCode === keyCodes.escape){
-      this.set('suggestStyles', 'display:none;');
+      this.set('showSuggestions', false);
     }
     else if(this.escapedChars.indexOf(event.keyCode) === -1){
       if(typeof this.get('targetObject').hideAlerts === 'function'){
@@ -57,7 +56,7 @@ export default Ember.Mixin.create({
     var _scope = this;
     var func = function(){
       if( _scope.isDestroyed ) return;
-      _scope.set('suggestStyles', 'display:none;');
+      _scope.set('showSuggestions', false);
       if(!_scope.get('selectedFromList')){
         _scope.set('selectedVal', '');
       }
@@ -67,12 +66,12 @@ export default Ember.Mixin.create({
 
   showLoading: function(){
     this.get('suggestions').pushObject({});
-    this.set('suggestStyles', this.get('suggestStylesOn'));
+    this.set('showSuggestions', true);
   },
 
   keyDown: function(event){
     this._super(event);
-    if( this.get('suggestStyles') !== 'display:none;'){
+    if( this.get('showSuggestions') ){
       if (event.keyCode === keyCodes.down_arrow){
         this._highlightResult('down');
       }
@@ -82,7 +81,7 @@ export default Ember.Mixin.create({
       else if(event.keyCode === keyCodes.enter){
         if(!Ember.isBlank(this.selectableSuggestion)){
           this.send('selectItem', this.selectableSuggestion);
-          this.set('suggestStyles', 'display:none;');
+          this.set('showSuggestions', false);
         }
       }
     }

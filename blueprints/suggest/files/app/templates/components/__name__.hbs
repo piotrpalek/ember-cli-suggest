@@ -1,5 +1,5 @@
 {{input class="typeahead" placeholder=placeHolderText value=selectedVal}}
-<span class="tt-dropdown-menu" {{bind-attr style=suggestStyles}}>
+<span class="tt-dropdown-menu" {{bind-attr class="showSuggestions::hidden"}}>
   <div class="tt-dataset-states">
     <span class="tt-suggestions" style="display: block;">
       {{#each result in suggestions}}
