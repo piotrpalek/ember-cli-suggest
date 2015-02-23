@@ -16,12 +16,14 @@ export default Ember.Mixin.create({
   escapedChars: [40,38, 13],
   hightlightIndex: -1,
   selectableSuggestion: null,
+
   actions: {
     selectItem: function(value){
       this.set('selectedFromList', true);
       this.send(this.selectedFunction, value);
     }
   },
+
   keyUp: function(event){
     var _scope = this;
     if(event.keyCode === 27){
@@ -37,6 +39,7 @@ export default Ember.Mixin.create({
       }
     }
   },
+
   focusOut: function(){
 
     var _scope = this;
@@ -49,10 +52,12 @@ export default Ember.Mixin.create({
     };
     Ember.run.later(this, func, 200); // set a little delay so give the select a chance to set
   },
+
   showLoading: function(){
     this.get('suggestions').pushObject({});
     this.set('suggestStyles', this.get('suggestStylesOn'));
   },
+
   keyDown: function(event){
     this._super(event);
     if( this.get('suggestStyles') !== 'display:none;'){
@@ -68,6 +73,7 @@ export default Ember.Mixin.create({
       }
     }
   },
+
   _highlightResult: function(direction){
     var newHighlightIndex = -1;
     if(direction === 'down'){
